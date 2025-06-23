@@ -348,10 +348,10 @@ def model_fixture(request: SubRequest, factory_name: str) -> Any:
     factory_class: FactoryType = request.getfixturevalue(factory_name)
 
     # Create model fixture instance
-    # Factory: FactoryType = cast(FactoryType, type("Factory", (factory_class,), {}))
+    Factory: FactoryType = cast(FactoryType, type("Factory", (factory_class,), {}, metaclass=type(factory_class)))
     # equivalent to:
-    class Factory(factory_class):
-        pass
+    # class Factory(factory_class):
+    #     pass
     # it just makes mypy understand it.
 
     Factory._meta.base_declarations = {
